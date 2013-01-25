@@ -155,7 +155,12 @@
           this.addItem(o.title, new Date(o.due), o.checked, new Date(o.creation), o.done ? new Date(o.done) : null);
         }
       }
-      console.info(this.data);
+      /**
+      		 * number of undone items
+      		 * @type {Number}
+      */
+
+      this.undone = this.calcUndone();
     }
 
     /**
@@ -264,6 +269,20 @@
         this.addItem(new window.stodo.ListItem(o.title, new Date(o.due), o.checked, new Date(o.creation)));
       }
       return this.data;
+    };
+
+    List.prototype.calcUndone = function() {
+      var item, undone, _i, _len, _ref;
+      undone = 0;
+      _ref = this.data;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        if (!item.checked) {
+          undone++;
+        }
+      }
+      this.undone = undone;
+      return this.undone;
     };
 
     /**

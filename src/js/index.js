@@ -135,12 +135,13 @@
       e.stopPropagation();
       return false;
     });
-    return $('#add-new-item').on('submit', 'form', function(e) {
+    $('#add-new-item').on('submit', 'form', function(e) {
       $('#btn-save-new-item').click();
       e.preventDefault();
       e.stopPropagation();
       return false;
     });
+    return $('#btn-export').click(function() {});
     /*
     
     

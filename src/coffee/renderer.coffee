@@ -30,7 +30,7 @@ class _Renderer
 			str += "<li id='list-#{id}' data-id='#{id}' data-icon='false'>"
 			str += "<a class='btn-list' data-id='#{id}'>#{list.title}</a>"
 			str += "<a class='btn-remove' data-id='#{id}'>削除</a>"
-			str += "<span class='ui-li-count'>#{list.data.length}</span>"
+			str += "<span class='ui-li-count'>#{list.undone}</span>"
 			str += "</li>\n"
 		if execRender
 			$('#lists').empty().append(str).listview('refresh')

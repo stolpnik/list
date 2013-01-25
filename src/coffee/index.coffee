@@ -139,6 +139,10 @@ _init = ->
 		return false
 	)
 
+	#export
+	$('#btn-export').click( ->
+
+	);
 
 	###
 

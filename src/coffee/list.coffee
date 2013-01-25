@@ -106,7 +106,13 @@ class @stodo.List
 					new Date( o.creation ),
 					if o.done then new Date( o.done ) else null
 				)
-		console.info this.data
+
+		###*
+		 * number of undone items
+		 * @type {Number}
+		###
+		this.undone = this.calcUndone()
+
 
 	###*
 	 * add item to data
@@ -174,6 +180,13 @@ class @stodo.List
 		for o in data
 			this.addItem new window.stodo.ListItem( o.title, new Date( o.due ), o.checked,  new Date( o.creation ) )
 		return this.data
+
+	calcUndone : ->
+		undone = 0
+		for item in this.data
+			undone++ unless( item.checked )
+		this.undone = undone
+		return this.undone
 
 	###*
 	 * serials
