@@ -1,0 +1,27 @@
+CACHE MANIFEST
+# 2013-01-25:v14
+
+CACHE:
+#html files
+index.html
+
+#stylesheets
+css/style.css
+http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css
+
+#javascripts
+js/index.js
+js/list.js
+js/renderer.js
+js/settings.js
+http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js
+http://code.jquery.com/ui/1.10.0/jquery-ui.js
+js/jquery.mobile-1.2.0.min.js
+components/requirejs/require.js
+
+#images
+http://code.jquery.com/mobile/1.2.0/images/icons-18-white.png
+http://code.jquery.com/mobile/1.2.0/images/ajax-loader.gif
+
+NETWORK:
+*
