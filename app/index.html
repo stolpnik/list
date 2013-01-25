@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<!-- <html lang="ja"> -->
+<html lang="ja" manifest="list.appcache">
+<head>
+<meta charset="UTF-8">
+<title>AAA</title>
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div data-role="page" id="page-index">
+	<div data-role="header" data-theme="c">
+		<h1>Lists</h1>
+	</div><!-- /header -->
+	<div data-role="content">
+		<!-- list view -->
+		<ul id="lists" data-role="listview" data-split-icon='delete' data-split-theme='c' data-inset="true" data-filter="false">
+		</ul>
+		<!-- /list view -->
+	</div><!-- /content -->
+	<div data-id="common-footer" class="page-footer" data-role="footer" data-theme="c" data-position="fixed">
+		<a href="#add-new-item" class="btn-add-new-item ui-btn-right" data-rel="popup" data-inline="true" data-icon="plus" data-iconpos="notext">Add</a>
+		<a href="#page-settings" class="btn-settings ui-btn-left" data-rel="page" data-inline="true" data-icon="gear" data-iconpos="notext">Settings</a>
+	</div><!-- /footer -->
+</div><!-- /page -->
+<!-- add new item dialog -->
+<div data-role="dialog" id="add-new-item" data-position-to="window" data-overlay-theme="c" data-theme="c" class="ui-corner-all">
+	<div data-role="header" data-theme="a" class="ui-corner-top">
+		<h1>Add new Item?</h1>
+	</div>
+	<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+		<h3 class="ui-title">Add new item</h3>
+		<form action="#">
+		<input type="text" data-icon="false" name="new-item-title" id="new-item-title" />
+		<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>
+		<a href="#" id="btn-save-new-item" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Add</a>
+		</form>
+	</div>
+</div>
+<!-- /add new item dialog -->
+<!-- edit dialog -->
+<div data-role="dialog" id="edit-item" data-position-to="window" data-overlay-theme="c" data-theme="c" class="ui-corner-all">
+	<div data-role="header" data-theme="a" class="ui-corner-top">
+		<h1>edit Item?</h1>
+	</div>
+	<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+		<h3 class="ui-title">edit item</h3>
+		<form action="#">
+		<input type="text" data-icon="false" name="edit-item-title" id="edit-item-title" />
+		<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>
+		<a href="#" id="btn-save-modified-item" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Add</a>
+		</form>
+	</div>
+</div>
+<!-- /edit dialog -->
+<div data-role="page" id="page-info" >
+	<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+		<h3 class="ui-title">edit item</h3>
+		<form action="#">
+		<input type="text" data-icon="false" name="edit-item-title" id="edit-item-title" />
+		<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>
+		<a href="#" id="btn-save-modified-item" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Add</a>
+		</form>
+	</div>
+</div>
+<!-- page list -->
+<div data-role="page" id="page-list">
+	<div data-role="header" data-theme="c">
+		<h1 id='page-list-title'>List</h1>
+		<a href="#page-index" data-rel="page" data-inline="true" data-icon="home" data-iconpos="notext" class="ui-btn-left">Home</a>
+	</div><!-- /header -->
+	<div data-role="content">
+		<!-- list view -->
+		<ul id="list" data-role="listview" data-split-icon='delete' data-split-theme='c' data-inset="true" data-filter="false">
+		</ul>
+		<!-- /list view -->
+	</div><!-- /content -->
+	<div data-id="common-footer" class="page-footer" data-role="footer" data-theme="c" data-position="fixed">
+		<a href="#add-new-item" class="btn-add-new-item ui-btn-right" data-rel="popup" data-inline="true" data-icon="plus" data-iconpos="notext">Add</a>
+		<a href="#page-settings" class="btn-settings ui-btn-left" data-rel="page" data-inline="true" data-icon="gear" data-iconpos="notext">Settings</a>
+	</div><!-- /footer -->
+</div>
+<!-- /page list -->
+<!-- page settings -->
+<div data-role="page" id="page-settings" >
+	<div data-role="header" data-theme="c">
+		<h1>Settings</h1>
+		<a href="#page-index" id="btn-settings" data-rel="page" data-inline="true" data-icon="home" data-iconpos="notext" class="ui-btn-left">Home</a>
+	</div><!-- /header -->
+	<div>
+		<div class="ui-body ui-body-d">
+			<div data-role="fieldcontain">
+				<label for="setting-show-done">終了項目の表示:</label>
+				<select name="setting-show-done" id="setting-show-done" data-role="slider">
+					<option value="off">Off</option>
+					<option value="on">On</option>
+				</select>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="setting-sort-by" class="select">表示の順番:</label>
+				<select name="setting-sort-by" id="setting-sort-by">
+					<option value="0">未完了のものを先に</option>
+					<option value="1">登録順</option>
+					<option value="2">期限が早い順</option>
+				</select>
+			</div>
+			<!--
+			<div data-role="fieldcontain">
+			<fieldset data-role="controlgroup" data-type="horizontal">
+		    	<legend>Font styling:</legend>
+		    	<input type="checkbox" name="checkbox-6d" id="checkbox-6d" class="custom" />
+				<label for="checkbox-6d">b</label>
+
+				<input type="checkbox" name="checkbox-7d" id="checkbox-7d" class="custom" />
+				<label for="checkbox-7d"><em>i</em></label>
+
+				<input type="checkbox" name="checkbox-8d" id="checkbox-8d" class="custom" />
+				<label for="checkbox-8d">u</label>
+				</fieldset>
+			</div>
+			<div data-role="fieldcontain">
+				<a id='btn-settings-cancel' href='#page-index' data-role='button' data-inline='true' data-theme='c'>キャンセル</a>
+				<a id='btn-settings-save' href='#page-index' data-role='button' data-inline='true' data-theme='c'>設定</a>
+			</div>
+			-->
+		</div>
+	</div><!-- /content -->
+
+</div>
+<!-- /page settings -->
+<script src="components/requirejs/require.js" data-main="js/index"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+@import "compass/reset";
+
+.checked {
+	text-decoration: line-through ;
+}
+
+.btn-remove {
+	display : none;
+}
+
+.page-footer {
+	height: 42px;
+	line-height: 42px;
+}
+
+.page-footer .ui-btn{
+	top: 9px;
+}

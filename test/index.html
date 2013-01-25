@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Mocha Spec Runner</title>
+<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+<!-- include stylesheets here -->
+
+<!-- /include stylesheets here -->
+<style>
+#mocha{
+	position: fixed;
+}
+</style>
+</head>
+<body>
+<div id="mocha"></div>
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="/testem.js"></script>
+<script>mocha.setup('bdd')</script>
+
+<!-- assertion framework -->
+
+<script src="../node_modules/chai/chai.js"></script>
+<script type="text/javascript" src="js/default.test.js"></script>
+
+<script>expect = chai.expect</script>
+
+<!-- include source files here... -->
+
+<!-- include spec files here... -->
+
+<!-- trigger the mocha runner -->
+<!--<script src="runner/mocha.js"></script>-->
+<script>
+if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+else { mocha.run(); }
+</script>
+
+</body>
+</html>
