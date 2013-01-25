@@ -162,7 +162,6 @@ _initializePage = (e) ->
 	unless _initialized
 		_initialized = true
 		_init()
-		$.mobile.changePage( '/' )
 
 	if e.type is "pageshow"
 		_mode = $(e.target).attr( 'id' )
@@ -183,6 +182,9 @@ _updateCurrentLists = ( e )->
 
 _showCurrentList = ( e )->
 	#showDone = if _settings.showDone is "on" then true else false
-	$("#page-list-title").text _list.title
-	_renderer.render _list, _settings
+	unless _list
+		$.mobile.changePage( '#page-index' )
+	else
+		$("#page-list-title").text _list.title
+		_renderer.render _list, _settings
 
