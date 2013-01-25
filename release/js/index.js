@@ -165,7 +165,6 @@
     if (!_initialized) {
       _initialized = true;
       _init();
-      $.mobile.changePage('/');
     }
     if (e.type === "pageshow") {
       return _mode = $(e.target).attr('id');
@@ -189,8 +188,12 @@
   };
 
   _showCurrentList = function(e) {
-    $("#page-list-title").text(_list.title);
-    return _renderer.render(_list, _settings);
+    if (!_list) {
+      return $.mobile.changePage('#page-index');
+    } else {
+      $("#page-list-title").text(_list.title);
+      return _renderer.render(_list, _settings);
+    }
   };
 
 }).call(this);
