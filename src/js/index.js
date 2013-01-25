@@ -68,7 +68,7 @@
     $('#list').on("click", '.btn-check', function(e) {
       var item;
       item = _list.toggle(this);
-      _list.save();
+      _lists.save();
       _renderer.render(_list);
       return $("#item-" + item.id).effect("highlight");
     });
@@ -189,7 +189,7 @@
 
   _showCurrentList = function(e) {
     if (!_list) {
-      return $.mobile.changePage('#page-index');
+      return location.href = './';
     } else {
       $("#page-list-title").text(_list.title);
       return _renderer.render(_list, _settings);

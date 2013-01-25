@@ -70,7 +70,7 @@ _init = ->
 	#list item click
 	$('#list').on( "click", '.btn-check', (e)->
 		item = _list.toggle(this)
-		_list.save()
+		_lists.save()
 		_renderer.render _list
 		$("#item-#{item.id}").effect("highlight")
 
@@ -183,7 +183,8 @@ _updateCurrentLists = ( e )->
 _showCurrentList = ( e )->
 	#showDone = if _settings.showDone is "on" then true else false
 	unless _list
-		$.mobile.changePage( '#page-index' )
+		#$.mobile.changePage( '#page-index' )
+		location.href = './'
 	else
 		$("#page-list-title").text _list.title
 		_renderer.render _list, _settings
