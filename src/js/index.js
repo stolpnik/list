@@ -62,7 +62,7 @@
       _list = _lists.findItem(this);
       return $.mobile.changePage($("#page-list"), {
         transition: "slidefade",
-        changeHash: false
+        changeHash: true
       });
     });
     $('#list').on("click", '.btn-check', function(e) {
@@ -165,6 +165,7 @@
     if (!_initialized) {
       _initialized = true;
       _init();
+      $.mobile.changePage('/');
     }
     if (e.type === "pageshow") {
       return _mode = $(e.target).attr('id');

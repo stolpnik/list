@@ -155,7 +155,7 @@ module.exports = function( grunt ) {
 		// the staging directory used during the process
 		staging: 'tmp/',
 		// final build output
-		output: 'dist/',
+		output: 'release/',
 
 		mkdirs: {
 			staging: 'dist/'
@@ -248,10 +248,10 @@ module.exports = function( grunt ) {
 				skipModuleInsertion: true,
 				optimizeAllPluginResources: false,
 				findNestedDependencies: true,
-				exclude : ["js/main.js", "js/sub.js"],
+				exclude : [],
 				fileExclusionRegExp : /^components$/,
 				onBuildWrite   : function( name, path, contents ) {
-					//console.log( 'Writing: ' + name );
+					console.log( 'Writing: ' + name );
 					return contents
 				}/*,
 				removeCombined : true*/
@@ -304,8 +304,9 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks('grunt-requirejs');
 
 	grunt.registerTask('production', 'compile coffee and compass to productioin', function(){
-		grunt.task.run( "hogan" );
-		grunt.task.run( "concat coffee concat:prod min" );
+		//grunt.task.run( "hogan" );
+		//grunt.task.run( "concat coffee concat:prod min" );
+		grunt.task.run( "coffee" );
 		grunt.task.run( "compass:prod" );
 		grunt.task.run( "notifyGrowl:production" );
 	});
@@ -379,6 +380,22 @@ module.exports = function( grunt ) {
 			}
 		});
 		grunt.file.write(data.output, result);
+	});
+
+	grunt.registerTask( 'releaseCopy', 'release files copy', function(){
+		grunt.file.recurse( 'app', function( abspath, rootdir, subdir, filename ){
+			if( filename === "list.appcache" )return;
+			var sub = subdir ? subdir + "/" : "";
+			grunt.file.copy( abspath, 'release/' + sub + filename );
+		} );
+		grunt.file.copy( 'src/appcache/list.appcache', 'release/list.appcache' );
+	} )
+
+	grunt.registerTask('release', 'release current version', function(){
+		grunt.task.run( "clean production releaseCopy" );
+		//grunt.file.recurse( 'docs', function( abspath, rootdir, subdir, filename ){
+		//	grunt.file.copy( abspath, '../p_release/' + abspath );
+		//} );
 	});
 
 };

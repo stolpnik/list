@@ -64,7 +64,7 @@ _init = ->
 	#ページ遷移
 	$( '#lists' ).on( 'click', 'a.btn-list', ->
 		_list = _lists.findItem this
-		$.mobile.changePage( $("#page-list"), { transition : "slidefade", changeHash : false } )
+		$.mobile.changePage( $("#page-list"), { transition : "slidefade", changeHash : true } )
 	)
 
 	#list item click
@@ -162,6 +162,7 @@ _initializePage = (e) ->
 	unless _initialized
 		_initialized = true
 		_init()
+		$.mobile.changePage( '/' )
 
 	if e.type is "pageshow"
 		_mode = $(e.target).attr( 'id' )
