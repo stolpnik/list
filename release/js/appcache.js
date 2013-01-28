@@ -1,8 +1,8 @@
 (function() {
 
   window.applicationCache.addEventListener('updateready', function(e) {
-    window.applicationCache.swapCache();
     if (confirm('コンテンツが更新されています。アップデートしますか?')) {
+      window.applicationCache.swapCache();
       return window.location.reload();
     }
   });
