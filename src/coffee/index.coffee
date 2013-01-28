@@ -1,5 +1,18 @@
+#attach appcache event
+
 #require ["zepto.min","ratchet"], ->
 require ["//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"], ->
+	$ ->
+		window.applicationCache.addEventListener 'updateready', (e)->
+			console.info "UPDATE READY?"
+			if( window.applicationCache.status == window.applicationCache.UPDATEREADY )
+				window.applicationCache.swapCache()
+				if confirm( 'A new version of this site is available. Load it?' )
+					window.location.reload()
+			else
+				#do nothing
+		window.applicationCache.update()
+
 	require [
 		"//code.jquery.com/ui/1.10.0/jquery-ui.js",
 		"js/renderer.js",
@@ -144,11 +157,6 @@ _init = ->
 
 	);
 
-	###
-
-
-
-
 	$( '#setting-sort-by' ).on( "change", (e)->
 		_settings.sortBy = $('#setting-sort-by').val()
 		_settings.save()
@@ -159,6 +167,7 @@ _init = ->
 		_settings.save()
 	)
 
+	###
 	#$('#add-new-item-screen, #edit-item-screen').off()
 	###
 

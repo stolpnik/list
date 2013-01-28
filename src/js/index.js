@@ -2,6 +2,20 @@
   var _init, _initializePage, _initialized, _list, _lists, _mode, _renderer, _settings, _showCurrentList, _updateCurrentLists, _updateCurrentSettings;
 
   require(["//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"], function() {
+    $(function() {
+      window.applicationCache.addEventListener('updateready', function(e) {
+        console.info("UPDATE READY?");
+        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+          window.applicationCache.swapCache();
+          if (confirm('A new version of this site is available. Load it?')) {
+            return window.location.reload();
+          }
+        } else {
+
+        }
+      });
+      return window.applicationCache.update();
+    });
     return require(["//code.jquery.com/ui/1.10.0/jquery-ui.js", "js/renderer.js", "js/list.js", "js/settings.js"], function() {
       $('#page-settings, #page-index, #page-list').on("pageinit pageshow", _initializePage);
       $('#page-settings').on("pagebeforeshow", _updateCurrentSettings);
@@ -141,22 +155,16 @@
       e.stopPropagation();
       return false;
     });
-    return $('#btn-export').click(function() {});
+    $('#btn-export').click(function() {});
+    $('#setting-sort-by').on("change", function(e) {
+      _settings.sortBy = $('#setting-sort-by').val();
+      return _settings.save();
+    });
+    return $('#setting-show-done').on("change", function(e) {
+      _settings.showDone = $('#setting-show-done').val();
+      return _settings.save();
+    });
     /*
-    
-    
-    
-    
-    	$( '#setting-sort-by' ).on( "change", (e)->
-    		_settings.sortBy = $('#setting-sort-by').val()
-    		_settings.save()
-    	)
-    
-    	$( '#setting-show-done' ).on( "change", (e)->
-    		_settings.showDone = $('#setting-show-done').val()
-    		_settings.save()
-    	)
-    
     	#$('#add-new-item-screen, #edit-item-screen').off()
     */
 

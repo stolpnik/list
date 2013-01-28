@@ -16,3 +16,9 @@
 .page-footer .ui-btn{
 	top: 9px;
 }
+
+//overwrite jqm css
+.ui-li .ui-btn-text a.ui-link-inherit {
+    white-space: normal;
+    line-height:  1.2em;
+}
