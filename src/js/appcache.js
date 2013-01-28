@@ -7,8 +7,6 @@
     }
   });
 
-  window.applicationCache.addEventListener('noupdate', function(e) {
-    return console.info("noupdate");
-  });
+  window.applicationCache.addEventListener('noupdate', function(e) {});
 
 }).call(this);

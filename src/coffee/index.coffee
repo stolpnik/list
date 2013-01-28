@@ -51,13 +51,11 @@ _init = ->
 
 	#Save
 	$('#btn-save-new-item').on( "click", ->
-		console.info _mode
 		switch _mode
 			when "page-index"
 				_lists.addList $("#new-item-title").val()
 				_lists.save()
 			when "page-list"
-				console.info _list
 				_list.addItem $("#new-item-title").val()
 				_lists.save()
 	)
@@ -87,7 +85,6 @@ _init = ->
 				title = list.title
 			when "page-list"
 				item = _list.findItem this
-				console.info item
 				_list.editItem = item
 				title = item.title
 		$.mobile.changePage( $('#edit-item'), { role : "dialog" } )
@@ -151,6 +148,13 @@ _init = ->
 		_settings.save()
 	)
 
+	#list
+	$('#list-show-done').on( 'change', (e)->
+		_list.showDone = this.value
+		_lists.save()
+		_renderer.render _list
+	)
+
 	$( '#setting-show-done' ).on( "change", (e)->
 		_settings.showDone = $('#setting-show-done').val()
 		_settings.save()
@@ -171,7 +175,7 @@ _initializePage = (e) ->
 		switch $(e.target).attr( 'id' )
 			when "page-index"
 				_renderer.renderLists _lists
-			when 'page-_settings'
+			when 'page-settings'
 				_updateCurrentSettings()
 
 _updateCurrentSettings = ->
@@ -189,5 +193,6 @@ _showCurrentList = ( e )->
 		location.href = './'
 	else
 		$("#page-list-title").text _list.title
+		$("#list-show-done").val( _list.showDone || _settings.showDone ).slider( "refresh" )
 		_renderer.render _list, _settings
 

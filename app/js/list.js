@@ -26,7 +26,7 @@
       this.editItem = null;
     }
 
-    Lists.prototype.addList = function(title, type, items) {
+    Lists.prototype.addList = function(title, type, items, showDone) {
       var list;
       if (type == null) {
         type = 0;
@@ -34,10 +34,13 @@
       if (items == null) {
         items = null;
       }
+      if (showDone == null) {
+        showDone = null;
+      }
       if (!this.data) {
         this.data = [];
       }
-      list = new stodo.List(title, type, items);
+      list = new stodo.List(title, type, items, showDone);
       this.data.push(list);
       return list;
     };
@@ -54,7 +57,7 @@
       if (lists && lists.length > 0) {
         for (_i = 0, _len = lists.length; _i < _len; _i++) {
           item = lists[_i];
-          list = this.addList(item.title, item.type, item.data);
+          list = this.addList(item.title, item.type, item.data, item.showDone);
         }
       }
       return this.data;
@@ -67,7 +70,6 @@
     Lists.prototype.findItem = function(elem) {
       var id, list, _i, _len, _ref;
       id = parseInt(elem.getAttribute("data-id"));
-      console.info(id);
       list = null;
       _ref = this.data;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -111,13 +113,16 @@
     	 * @constructor
     */
 
-    function List(title, type, items) {
+    function List(title, type, items, showDone) {
       var o, _i, _len;
       if (type == null) {
         type = 0;
       }
       if (items == null) {
         items = null;
+      }
+      if (showDone == null) {
+        showDone = null;
       }
       /**
       		 * title
@@ -161,6 +166,12 @@
       */
 
       this.undone = this.calcUndone();
+      /**
+      		 * individual setting for show done item
+      		 * @type {Boolean}
+      */
+
+      this.showDone = showDone;
     }
 
     /**
@@ -220,7 +231,6 @@
 
     List.prototype.remove = function(elem) {
       var item;
-      console.info(elem);
       if (!elem) {
         return null;
       }
@@ -230,7 +240,6 @@
     };
 
     List.prototype.modifyItem = function(item, title) {
-      console.info(item);
       item.title = title;
       return item;
     };

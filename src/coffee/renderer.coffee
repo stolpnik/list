@@ -44,7 +44,8 @@ class _Renderer
 	###
 	render : ( list, settings = window.stodo.Settings.getInstance(), execRender = true )->
 		return unless list && list.data
-		showDone = settings.showDone.match( "on" )
+		console.info "list.showDone", list.showDone
+		showDone = unless list.showDone then settings.showDone.match( "on" ) else list.showDone.match("on")
 		switch parseInt( settings.sortBy )
 				when 0
 					sortMethod = stodo.Renderer.getInstance().sortByUndone

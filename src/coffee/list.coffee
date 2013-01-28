@@ -18,9 +18,9 @@ class @stodo.Lists
 		###
 		this.editItem = null
 
-	addList : ( title, type = 0, items = null )->
+	addList : ( title, type = 0, items = null, showDone = null )->
 		this.data = [] unless this.data
-		list = new stodo.List( title, type, items )
+		list = new stodo.List( title, type, items, showDone )
 		this.data.push list
 		return list
 
@@ -30,7 +30,7 @@ class @stodo.Lists
 		this.data = []
 		if lists && lists.length > 0
 			for item in lists
-				list = this.addList item.title, item.type, item.data
+				list = this.addList item.title, item.type, item.data, item.showDone
 		return this.data
 
 	save : ->
@@ -38,7 +38,6 @@ class @stodo.Lists
 
 	findItem : ( elem )->
 		id = parseInt elem.getAttribute("data-id")
-		console.info id
 		list = null
 		for list in this.data
 			if list.id is id
@@ -66,7 +65,7 @@ class @stodo.List
 	 * @class List
 	 * @constructor
 	###
-	constructor: ( title, type = 0, items = null )->
+	constructor: ( title, type = 0, items = null, showDone = null )->
 		###*
 		 * title
 		 * @type {String}
@@ -113,6 +112,12 @@ class @stodo.List
 		###
 		this.undone = this.calcUndone()
 
+		###*
+		 * individual setting for show done item
+		 * @type {Boolean}
+		###
+		this.showDone = showDone
+
 
 	###*
 	 * add item to data
@@ -150,14 +155,12 @@ class @stodo.List
 		$(elem).effect("highlight", { color : List.REMOVE_HL_COLOR }).find('.btn-remove').toggle( "fade" )
 
 	remove : (elem)->
-		console.info elem
 		return null unless elem
 		item = this.findItem elem
 		this.data.splice( $.inArray( item, this.data ), 1 )
 		return item
 
 	modifyItem : ( item, title )->
-		console.info item
 		item.title = title
 		return item
 	###*
