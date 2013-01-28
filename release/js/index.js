@@ -141,22 +141,16 @@
       e.stopPropagation();
       return false;
     });
-    return $('#btn-export').click(function() {});
+    $('#btn-export').click(function() {});
+    $('#setting-sort-by').on("change", function(e) {
+      _settings.sortBy = $('#setting-sort-by').val();
+      return _settings.save();
+    });
+    return $('#setting-show-done').on("change", function(e) {
+      _settings.showDone = $('#setting-show-done').val();
+      return _settings.save();
+    });
     /*
-    
-    
-    
-    
-    	$( '#setting-sort-by' ).on( "change", (e)->
-    		_settings.sortBy = $('#setting-sort-by').val()
-    		_settings.save()
-    	)
-    
-    	$( '#setting-show-done' ).on( "change", (e)->
-    		_settings.showDone = $('#setting-show-done').val()
-    		_settings.save()
-    	)
-    
     	#$('#add-new-item-screen, #edit-item-screen').off()
     */
 
