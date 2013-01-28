@@ -88,7 +88,8 @@
       if (!(list && list.data)) {
         return;
       }
-      showDone = settings.showDone.match("on");
+      console.info("list.showDone", list.showDone);
+      showDone = !list.showDone ? settings.showDone.match("on") : list.showDone.match("on");
       switch (parseInt(settings.sortBy)) {
         case 0:
           sortMethod = stodo.Renderer.getInstance().sortByUndone;

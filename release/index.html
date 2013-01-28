@@ -73,6 +73,13 @@
 		<a href="#page-index" data-rel="page" data-inline="true" data-icon="home" data-iconpos="notext" class="ui-btn-left">Home</a>
 	</div><!-- /header -->
 	<div data-role="content">
+		<div class='list-control' data-role='fieldcontain'>
+			<label for="list-show-done">終了項目の表示：</label>
+			<select name="list-show-done" id="list-show-done" data-mini="true" data-role="slider">
+				<option value="off">Off</option>
+				<option value="on">On</option>
+			</select>
+		</div>
 		<!-- list view -->
 		<ul id="list" data-role="listview" data-split-icon='delete' data-split-theme='c' data-inset="true" data-filter="false">
 		</ul>
