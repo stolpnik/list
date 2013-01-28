@@ -1,5 +1,5 @@
 (function() {
-  var _init, _initializePage, _initialized, _list, _lists, _mode, _renderer, _settings, _showCurrentList, _updateCurrentLists, _updateCurrentSettings;
+  var _checkList, _init, _initializePage, _initialized, _list, _lists, _mode, _renderer, _settings, _showCurrentList, _updateCurrentLists, _updateCurrentSettings;
 
   require(["//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"], function() {
     return require(["//code.jquery.com/ui/1.10.0/jquery-ui.js", "js/renderer.js", "js/list.js", "js/settings.js"], function() {
@@ -40,13 +40,13 @@
     List = this.stodo.List;
     ListItem = this.stodo.ListItem;
     _renderer = this.stodo.Renderer.getInstance();
-    $('.btn-add-new-item').on("click", function() {
+    $('.btn-add-new-item').on("vclick", function() {
       $.mobile.changePage($('#add-new-item'), {
         role: "dialog"
       });
       return false;
     });
-    $('#btn-save-new-item').on("click", function() {
+    $('#btn-save-new-item').on("vclick", function() {
       switch (_mode) {
         case "page-index":
           _lists.addList($("#new-item-title").val());
@@ -56,19 +56,12 @@
           return _lists.save();
       }
     });
-    $('#lists').on('click', 'a.btn-list', function() {
+    $('#lists').on('vclick', 'a.btn-list', function() {
       _list = _lists.findItem(this);
       return $.mobile.changePage($("#page-list"), {
         transition: "slidefade",
         changeHash: true
       });
-    });
-    $('#list').on("click", '.btn-check', function(e) {
-      var item;
-      item = _list.toggle(this);
-      _lists.save();
-      _renderer.render(_list);
-      return $("#item-" + item.id).effect("highlight");
     });
     $('#lists, #list').on("taphold", 'li', function(e) {
       var item, list, title;
@@ -88,7 +81,7 @@
       });
       return $('#edit-item').find('#edit-item-title').val(title).focus();
     });
-    $('#btn-save-modified-item').on("click", function() {
+    $('#btn-save-modified-item').on("vclick", function() {
       switch (_mode) {
         case "page-index":
           _lists.modifyItem(_lists.editItem, $("#edit-item-title").val());
@@ -106,7 +99,7 @@
       }).find('.btn-remove').toggle("fade");
       return false;
     });
-    $('#lists').on("click", '.btn-remove', function(e) {
+    $('#lists').on("vclick", '.btn-remove', function(e) {
       var item;
       item = _lists.remove(this);
       _lists.save();
@@ -116,7 +109,7 @@
         return _renderer.renderLists(_lists);
       });
     });
-    $('#list').on("click", '.btn-remove', function(e) {
+    $('#list').on("vclick", '.btn-remove', function(e) {
       var item;
       item = _list.remove(this);
       _lists.save();
@@ -190,8 +183,20 @@
     } else {
       $("#page-list-title").text(_list.title);
       $("#list-show-done").val(_list.showDone || _settings.showDone).slider("refresh");
-      return _renderer.render(_list, _settings);
+      _renderer.render(_list, _settings);
+      return $('#list').on("vclick", '.btn-check', _checkList);
     }
+  };
+
+  _checkList = function(e) {
+    var item;
+    $('#list').off("vclick", '.btn-check', _checkList);
+    item = _list.toggle(this);
+    _lists.save();
+    return $("#item-" + item.id).effect("highlight", {}, 500, function() {
+      _renderer.render(_list);
+      return $('#list').on("vclick", '.btn-check', _checkList);
+    });
   };
 
 }).call(this);
