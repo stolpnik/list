@@ -75,3 +75,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   white-space: normal;
   line-height: 1.2em;
 }
+
+#add-new-item .ui-icon-searchfield:after, #edit-item .ui-icon-searchfield:after {
+  background: none;
+}

@@ -2,20 +2,6 @@
   var _init, _initializePage, _initialized, _list, _lists, _mode, _renderer, _settings, _showCurrentList, _updateCurrentLists, _updateCurrentSettings;
 
   require(["//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"], function() {
-    $(function() {
-      window.applicationCache.addEventListener('updateready', function(e) {
-        console.info("UPDATE READY?");
-        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-          window.applicationCache.swapCache();
-          if (confirm('A new version of this site is available. Load it?')) {
-            return window.location.reload();
-          }
-        } else {
-
-        }
-      });
-      return window.applicationCache.update();
-    });
     return require(["//code.jquery.com/ui/1.10.0/jquery-ui.js", "js/renderer.js", "js/list.js", "js/settings.js"], function() {
       $('#page-settings, #page-index, #page-list').on("pageinit pageshow", _initializePage);
       $('#page-settings').on("pagebeforeshow", _updateCurrentSettings);
