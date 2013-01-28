@@ -22,7 +22,6 @@ class _Renderer
 
 	renderLists : ( lists, settings = window.stodo.Settings.getInstance(), execRender = true )->
 		return unless lists && lists.data
-		console.info "renderLists"
 		temp = lists.data.concat()
 		str = ""
 		for list in temp
@@ -44,7 +43,6 @@ class _Renderer
 	###
 	render : ( list, settings = window.stodo.Settings.getInstance(), execRender = true )->
 		return unless list && list.data
-		console.info "list.showDone", list.showDone
 		showDone = unless list.showDone then settings.showDone.match( "on" ) else list.showDone.match("on")
 		switch parseInt( settings.sortBy )
 				when 0

@@ -21,6 +21,7 @@ _list = null
 _settings = null
 _renderer = null
 _mode = "page-index" #page-id
+
 ###*
  * make an initialization
  * @return {null}
@@ -44,13 +45,13 @@ _init = ->
 	#_list.load window.localStorage.getItem( "list" )
 
 	#Events
-	$('.btn-add-new-item').on(  "click", ->
+	$('.btn-add-new-item').on(  "vclick", ->
 		$.mobile.changePage( $('#add-new-item'), { role : "dialog" } )
 		return false
 	)
 
 	#Save
-	$('#btn-save-new-item').on( "click", ->
+	$('#btn-save-new-item').on( "vclick", ->
 		switch _mode
 			when "page-index"
 				_lists.addList $("#new-item-title").val()
@@ -62,18 +63,9 @@ _init = ->
 
 	#list click
 	#ページ遷移
-	$( '#lists' ).on( 'click', 'a.btn-list', ->
+	$( '#lists' ).on( 'vclick', 'a.btn-list', ->
 		_list = _lists.findItem this
 		$.mobile.changePage( $("#page-list"), { transition : "slidefade", changeHash : true } )
-	)
-
-	#list item click
-	$('#list').on( "click", '.btn-check', (e)->
-		item = _list.toggle(this)
-		_lists.save()
-		_renderer.render _list
-		$("#item-#{item.id}").effect("highlight")
-
 	)
 
 	#長押しで編集
@@ -92,7 +84,7 @@ _init = ->
 	)
 
 	#編集ボタンを押下
-	$('#btn-save-modified-item').on( "click", ->
+	$('#btn-save-modified-item').on( "vclick", ->
 		switch _mode
 			when "page-index"
 				_lists.modifyItem( _lists.editItem, $("#edit-item-title").val() )
@@ -111,13 +103,13 @@ _init = ->
 	)
 
 	#削除ボタン
-	$('#lists').on( "click", '.btn-remove', (e)->
+	$('#lists').on( "vclick", '.btn-remove', (e)->
 		item = _lists.remove(this)
 		_lists.save()
 		$( "#list-#{item.id}" ).effect( "highlight", { color : stodo.List.REMOVE_HL_COLOR } , 250, -> _renderer.renderLists _lists )
 	)
 
-	$('#list').on( "click", '.btn-remove', (e)->
+	$('#list').on( "vclick", '.btn-remove', (e)->
 		item = _list.remove(this)
 		_lists.save()
 		$( "#item-#{item.id}" ).effect( "highlight", { color : stodo.List.REMOVE_HL_COLOR } , 250, -> _renderer.render _list )
@@ -183,11 +175,9 @@ _updateCurrentSettings = ->
 	$('#setting-sort-by').val( _settings.sortBy ).selectmenu( "refresh" )
 
 _updateCurrentLists = ( e )->
-	#showDone = if _settings.showDone is "on" then true else false
 	_renderer.renderLists _lists, _settings
 
 _showCurrentList = ( e )->
-	#showDone = if _settings.showDone is "on" then true else false
 	unless _list
 		#$.mobile.changePage( '#page-index' )
 		location.href = './'
@@ -195,4 +185,16 @@ _showCurrentList = ( e )->
 		$("#page-list-title").text _list.title
 		$("#list-show-done").val( _list.showDone || _settings.showDone ).slider( "refresh" )
 		_renderer.render _list, _settings
+		#list item click
+		$('#list').on( "vclick", '.btn-check', _checkList )
 
+
+
+_checkList = (e) ->
+	$('#list').off( "vclick", '.btn-check', _checkList )
+	item = _list.toggle(this)
+	_lists.save()
+	$("#item-#{item.id}").effect("highlight", {}, 500, ->
+		_renderer.render _list
+		$('#list').on( "vclick", '.btn-check', _checkList )
+	)

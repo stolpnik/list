@@ -51,7 +51,6 @@
       if (!(lists && lists.data)) {
         return;
       }
-      console.info("renderLists");
       temp = lists.data.concat();
       str = "";
       for (_i = 0, _len = temp.length; _i < _len; _i++) {
@@ -88,7 +87,6 @@
       if (!(list && list.data)) {
         return;
       }
-      console.info("list.showDone", list.showDone);
       showDone = !list.showDone ? settings.showDone.match("on") : list.showDone.match("on");
       switch (parseInt(settings.sortBy)) {
         case 0:
