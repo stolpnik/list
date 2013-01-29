@@ -99,7 +99,7 @@
       }).find('.btn-remove').toggle("fade");
       return false;
     });
-    $('#lists').on("vclick", '.btn-remove', function(e) {
+    $('#lists').on("click", '.btn-remove', function(e) {
       var item;
       item = _lists.remove(this);
       _lists.save();
@@ -109,7 +109,7 @@
         return _renderer.renderLists(_lists);
       });
     });
-    $('#list').on("vclick", '.btn-remove', function(e) {
+    $('#list').on("click", '.btn-remove', function(e) {
       var item;
       item = _list.remove(this);
       _lists.save();
@@ -184,18 +184,16 @@
       $("#page-list-title").text(_list.title);
       $("#list-show-done").val(_list.showDone || _settings.showDone).slider("refresh");
       _renderer.render(_list, _settings);
-      return $('#list').on("vclick", '.btn-check', _checkList);
+      return $('#list').on("click", '.btn-check', _checkList);
     }
   };
 
   _checkList = function(e) {
     var item;
-    $('#list').off("vclick", '.btn-check', _checkList);
     item = _list.toggle(this);
     _lists.save();
     return $("#item-" + item.id).effect("highlight", {}, 500, function() {
-      _renderer.render(_list);
-      return $('#list').on("vclick", '.btn-check', _checkList);
+      return _renderer.render(_list);
     });
   };
 
