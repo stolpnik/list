@@ -103,13 +103,13 @@ _init = ->
 	)
 
 	#削除ボタン
-	$('#lists').on( "vclick", '.btn-remove', (e)->
+	$('#lists').on( "click", '.btn-remove', (e)->
 		item = _lists.remove(this)
 		_lists.save()
 		$( "#list-#{item.id}" ).effect( "highlight", { color : stodo.List.REMOVE_HL_COLOR } , 250, -> _renderer.renderLists _lists )
 	)
 
-	$('#list').on( "vclick", '.btn-remove', (e)->
+	$('#list').on( "click", '.btn-remove', (e)->
 		item = _list.remove(this)
 		_lists.save()
 		$( "#item-#{item.id}" ).effect( "highlight", { color : stodo.List.REMOVE_HL_COLOR } , 250, -> _renderer.render _list )
@@ -186,15 +186,15 @@ _showCurrentList = ( e )->
 		$("#list-show-done").val( _list.showDone || _settings.showDone ).slider( "refresh" )
 		_renderer.render _list, _settings
 		#list item click
-		$('#list').on( "vclick", '.btn-check', _checkList )
+		$('#list').on( "click", '.btn-check', _checkList )
 
 
 
 _checkList = (e) ->
-	$('#list').off( "vclick", '.btn-check', _checkList )
+	#$('#list').off( "click", '.btn-check', _checkList )
 	item = _list.toggle(this)
 	_lists.save()
 	$("#item-#{item.id}").effect("highlight", {}, 500, ->
 		_renderer.render _list
-		$('#list').on( "vclick", '.btn-check', _checkList )
+		#$('#list').on( "vclick", '.btn-check', _checkList )
 	)
