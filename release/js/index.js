@@ -1,17 +1,23 @@
+
+/*
+require ["//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"], ->
+	require [
+		"//code.jquery.com/ui/1.10.0/jquery-ui.js",
+		"js/renderer.js",
+		"js/list.js",
+		"js/settings.js"
+	], ->
+		$('#page-settings, #page-index, #page-list').on("pageinit pageshow", _initializePage )
+		$('#page-settings').on("pagebeforeshow", _updateCurrentSettings )
+		$('#page-index').on("pagebeforeshow", _updateCurrentLists )
+		$('#page-list').on("pagebeforeshow", _showCurrentList )
+		require [ "js/jquery.mobile-1.2.0.min.js" ], ->
+			null
+*/
+
+
 (function() {
   var _checkList, _init, _initializePage, _initialized, _list, _lists, _mode, _renderer, _settings, _showCurrentList, _updateCurrentLists, _updateCurrentSettings;
-
-  require(["//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"], function() {
-    return require(["//code.jquery.com/ui/1.10.0/jquery-ui.js", "js/renderer.js", "js/list.js", "js/settings.js"], function() {
-      $('#page-settings, #page-index, #page-list').on("pageinit pageshow", _initializePage);
-      $('#page-settings').on("pagebeforeshow", _updateCurrentSettings);
-      $('#page-index').on("pagebeforeshow", _updateCurrentLists);
-      $('#page-list').on("pagebeforeshow", _showCurrentList);
-      return require(["js/jquery.mobile-1.2.0.min.js"], function() {
-        return null;
-      });
-    });
-  });
 
   _initialized = false;
 
@@ -33,13 +39,14 @@
 
   _init = function() {
     var List, ListItem;
-    _settings = this.stodo.Settings.getInstance();
+    console.info;
+    _settings = window.stodo.Settings.getInstance();
     _settings.save();
-    _lists = new this.stodo.Lists();
+    _lists = new window.stodo.Lists();
     _lists.load(window.localStorage.getItem("lists"));
-    List = this.stodo.List;
-    ListItem = this.stodo.ListItem;
-    _renderer = this.stodo.Renderer.getInstance();
+    List = window.stodo.List;
+    ListItem = window.stodo.ListItem;
+    _renderer = window.stodo.Renderer.getInstance();
     $('.btn-add-new-item').on("vclick", function() {
       $.mobile.changePage($('#add-new-item'), {
         role: "dialog"
@@ -63,6 +70,7 @@
         changeHash: true
       });
     });
+    $('#list').on("click", '.btn-check', _checkList);
     $('#lists, #list').on("taphold", 'li', function(e) {
       var item, list, title;
       switch (_mode) {
@@ -183,8 +191,7 @@
     } else {
       $("#page-list-title").text(_list.title);
       $("#list-show-done").val(_list.showDone || _settings.showDone).slider("refresh");
-      _renderer.render(_list, _settings);
-      return $('#list').on("click", '.btn-check', _checkList);
+      return _renderer.render(_list, _settings);
     }
   };
 
@@ -196,5 +203,12 @@
       return _renderer.render(_list);
     });
   };
+
+  $(function() {
+    $('#page-settings, #page-index, #page-list').on("pageinit pageshow", _initializePage);
+    $('#page-settings').on("pagebeforeshow", _updateCurrentSettings);
+    $('#page-index').on("pagebeforeshow", _updateCurrentLists);
+    return $('#page-list').on("pagebeforeshow", _showCurrentList);
+  });
 
 }).call(this);

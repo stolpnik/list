@@ -1,6 +1,7 @@
 #attach appcache event
 
 #require ["zepto.min","ratchet"], ->
+###
 require ["//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"], ->
 	require [
 		"//code.jquery.com/ui/1.10.0/jquery-ui.js",
@@ -14,6 +15,7 @@ require ["//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"], ->
 		$('#page-list').on("pagebeforeshow", _showCurrentList )
 		require [ "js/jquery.mobile-1.2.0.min.js" ], ->
 			null
+###
 
 _initialized = false
 _lists = null
@@ -28,17 +30,18 @@ _mode = "page-index" #page-id
 ###
 _init = ->
 	#Settings
-	_settings = @stodo.Settings.getInstance()
+	console.info
+	_settings = window.stodo.Settings.getInstance()
 	_settings.save()
 
 	#Lists
-	_lists = new @stodo.Lists()
+	_lists = new window.stodo.Lists()
 	_lists.load window.localStorage.getItem( "lists" )
 
 	#Classes
-	List = @stodo.List
-	ListItem = @stodo.ListItem
-	_renderer = @stodo.Renderer.getInstance()
+	List = window.stodo.List
+	ListItem = window.stodo.ListItem
+	_renderer = window.stodo.Renderer.getInstance()
 
 	#List
 	#_list = new List()
@@ -67,6 +70,9 @@ _init = ->
 		_list = _lists.findItem this
 		$.mobile.changePage( $("#page-list"), { transition : "slidefade", changeHash : true } )
 	)
+
+	#check item
+	$('#list').on( "click", '.btn-check', _checkList )
 
 	#長押しで編集
 	$('#lists, #list').on( "taphold", 'li', (e)->
@@ -185,16 +191,16 @@ _showCurrentList = ( e )->
 		$("#page-list-title").text _list.title
 		$("#list-show-done").val( _list.showDone || _settings.showDone ).slider( "refresh" )
 		_renderer.render _list, _settings
-		#list item click
-		$('#list').on( "click", '.btn-check', _checkList )
-
-
 
 _checkList = (e) ->
-	#$('#list').off( "click", '.btn-check', _checkList )
 	item = _list.toggle(this)
 	_lists.save()
 	$("#item-#{item.id}").effect("highlight", {}, 500, ->
 		_renderer.render _list
-		#$('#list').on( "vclick", '.btn-check', _checkList )
 	)
+
+$ ->
+	$('#page-settings, #page-index, #page-list').on("pageinit pageshow", _initializePage )
+	$('#page-settings').on("pagebeforeshow", _updateCurrentSettings )
+	$('#page-index').on("pagebeforeshow", _updateCurrentLists )
+	$('#page-list').on("pagebeforeshow", _showCurrentList )
